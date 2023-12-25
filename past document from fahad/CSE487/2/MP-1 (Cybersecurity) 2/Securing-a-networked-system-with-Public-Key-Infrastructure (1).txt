@@ -1,0 +1,283 @@
+Group Members : 1. Rafsan Bari Shafin 
+		    2. Zannatul Mawa
+       	    3. Sabuj Paul 
+Securing a networked system with Public Key Infrastructure Implementing Transport Layer Security on HTTP for https:// connection
+
+Project: Securing a networked system with PKI and configure Firewall and IDS
+
+Group-based moderately complex security systems design project with report writing and oral presentation
+
+Requirements: 
+Configuration of Certification Authority BaymaxCA
+Configuration of the Web Server 
+DNS configuration for www.baymaxsecureserver.com
+CSR Configuration and Generation for the www.baymaxsecureserver.com
+Certification process (Verification and Certificate Generation from CSR)
+Installation of the signed SSL certificate in the server
+Making the system trust Baymax-RootCA
+Implementation of a simple file uploading page in the server. 
+Verifying the security of the connection by inspection (the padlock icon), and with wireshark from another client. 
+Revoke the certificate issued to baymaxsecureserver.com from the BaymaxCA and distribute the first.
+Verifying the revocation of the CRS from the client.
+
+
+------------------------------------------------------------------------------------------------
+
+
+Step1: 
+
+DNS Configuration:
+c:/Windows/System32/drivers/etc/hosts:
+127.0.0.1       localhost
+127.0.0.1       baymaxsecureserver
+127.0.0.1       www.baymaxsecureserver.com
+
+
+xampp→apache→conf→
+httpd.conf:
+DocumentRoot "C:/baymaxSecureServer"
+<Directory "C:/baymaxSecureServer">
+
+
+
+Step2:
+For openssl environment path configuration:
+set OPENSSL_CONF=C:\xampp\apache\conf\openssl.cnf
+
+
+xampp\apache\bin -> openssl.exe 
+For creating a server certificate→
+~ req -newkey rsa:2048 -nodes -keyout server.key -out server.csr
+
+🕸️Common name: www.baymaxsecureserver.com
+
+~ x509 -signkey server.key -in server.csr -req -days 365 -out server.crt
+
+
+
+control C
+
+
+
+For creating a sub root CA certificate→
+~  req -newkey rsa:2048 -keyout subrootCA.key -out subrootCA.csr
+
+🕸️Common Name: BaymaxCA
+
+
+~  x509 -signkey subrootCA.key -in subrootCA.csr -req -days 365 -out subrootCA.crt
+
+control C
+
+For creating a root CA certificate→
+~  req -x509 -sha256 -days 1825 -newkey rsa:2048 -keyout rootCA.key -out rootCA.crt
+
+
+🕸️Common Name: Baymax-RootCA
+
+
+
+domain.ext:
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 =www.baymaxsecureserver.com
+DNS.2 =127.0.0.1
+
+
+root.ext:
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:TRUE
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 =www.baymaxsecureserver.com
+DNS.2 =127.0.0.1
+
+
+
+
+Signing subrootCA certificate with rootCA certificate→
+~ x509 -req -CA rootCA.crt -CAkey rootCA.key -in subrootCA.csr -out subrootCA.crt -days 365 -CAcreateserial -extfile root.ext
+
+For checking the subrootCa certificate→
+~ x509 -text -noout -in subrootCA.crt
+
+~ x509 -in subrootCA.crt -outform der -out subrootCA.der
+
+
+
+
+Exporting the subrootCA key file in subrootCA pfx file→
+~ pkcs12 -inkey subrootCA.key -in subrootCA.crt -export -out subrootCA.pfx
+
+
+
+Signing server certificate with subrootCA certificate→
+~ x509 -req -CA subrootCA.crt -CAkey subrootCA.key -in server.csr -out server.crt -days 365 -CAcreateserial -extfile domain.ext
+
+
+
+~ x509 -in server.crt -outform der -out server.der
+
+
+
+Exporting the server key file in the server .pfx file→
+~ pkcs12 -inkey server.key -in server.crt -export -out server.pfx
+
+Replacing the RSA encryption from the server and subrootCA key for setting the validity→
+~ rsa -in server.key -out server.key
+~ rsa -in subrootCA.key -out subrootCA.key
+
+
+
+
+
+Step3: 
+
+
+
+Creating certificate:
+Configuring	apache\conf\extra\ httpd-vhosts:
+
+<VirtualHost *:443>
+    DocumentRoot "C:/baymaxSecureServer/"
+    ServerName baymaxsecureserver
+    ServerAlias www.baymaxsecureserver.com
+    SSLEngine on
+    SSLCertificateFile "conf/ssl.crt/server.crt" 
+    SSLCertificateKeyFile "conf/ssl.key/server.key"
+</VirtualHost>
+
+Then From bin folder first install rooCA.crt file then subrootCA.cpfx file
+
+
+
+-----------------------------------------------------------------------
+BIND9
+have to change zone files ip address and etc files ip address as the local address
+Control Panel\Network and Internet\Network Connections
+then go to the connected wifis properties and double click on TCP then change the address according to ip address
+
+
+-----------------------------------------------------------------------
+
+
+Step 4: Revocation of certificate:
+
+Open openssl.exe to revoke the certificate issued to baymaxsecureserver.com from the AcmeCA →
+ca -config subrootCA.conf -revoke server.crt
+
+To generate revocation crl file →
+ca -config subrootCA.conf -gencrl -out rev.crl
+
+To see the revocation file in the form of text →
+crl -in rev.crl -noout -text
+
+
+--------------------------------------------------------------------------------
+SNORT
+first for check cmd run as admisistrtor
+then cd c:\Snort\bin
+~ snort -V
+~ snont -W # interfce check kore
+~ snort -i 1 -c c:\Snort\etc\snort.conf -T
+Final
+~ snort -i 1 -c c:\Snort\etc\snort.conf -A console
+
+
+
+
+DOS Attack 
+terminal -> type "msfconsole"
+~ use auxiliary/dos/tcp/synflood
+~ show option ( ways to target your victim)
+~ set rhosts 192.168.0.104
+~ exploit
+
+
+
+subrootCA.conf:
+[ca]
+default_ca = CA_default
+[CA_default]
+dir =C:/xampp/apache/bin
+certs = $dir
+crl_dir = $dir
+new_certs_dir = $dir
+database = $dir/index.txt
+serial = $dir/serial.txt
+RANDFILE = $dir/private/.rand
+private_key = $dir/subrootCA.key
+certificate = $dir/subrootCA.crt
+crlnumber = $dir/crlnumber.txt
+crl = $dir/crl/ca.crl
+default_crl_days = 30
+default_md = sha256
+name_opt = ca_default
+cert_opt = ca_default
+default_days = 365
+preserve = no
+policy = policy_loose
+[ policy_strict ]
+countryName = supplied
+stateOrProvinceName = supplied
+organizationName = supplied
+organizationalUnitName = optional
+commonName = supplied
+emailAddress = optional
+[ policy_loose ]
+countryName = optional
+stateOrProvinceName = optional
+localityName = optional
+organizationName = optional
+organizationalUnitName = optional
+commonName = supplied
+emailAddress = optional
+[ req ]
+# Options for the req tool, man req.
+default_bits = 2048
+distinguished_name = req_distinguished_name
+string_mask = utf8only
+default_md = sha256
+# Extension to add when the -x509 option is used.
+x509_extensions = v3_ca
+[ req_distinguished_name ]
+countryName = Country Name (2 letter code)
+stateOrProvinceName = State or Province Name
+localityName = Locality Name
+0.organizationName = Organization Name
+organizationalUnitName = Organizational Unit Name
+commonName = Common Name
+emailAddress = Email Address
+countryName_default = BD
+stateOrProvinceName_default = Dhaka
+0.organizationName_default = EWU
+[ v3_ca ]
+# Extensions to apply when createing root ca
+# Extensions for a typical CA, man x509v3_config
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:true
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+[ v3_intermediate_ca ]
+# Extensions to apply when creating intermediate or sub-ca
+# Extensions for a typical intermediate CA, same man as above
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+#pathlen:0 ensures no more sub-ca can be created below an intermediate
+basicConstraints = critical, CA:true, pathlen:0
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+crlDistributionPoints = @crl_dist_points
+[ server_cert ]
+# Extensions for server certificates
+basicConstraints = CA:FALSE
+nsComment = "OpenSSL Generated Server Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer:always
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = www.baymxsecureserver.com
+DNS.2 = 127.0.0.1

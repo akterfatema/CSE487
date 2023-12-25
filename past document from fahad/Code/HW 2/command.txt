@@ -1,0 +1,23 @@
+#list of images 
+
+docker images
+
+#list of container 
+
+docker ps -a
+
+#run a container 
+
+docker start ContainerName/ID
+
+#get into a container 
+
+docker attach ContainerName/ID
+
+#get ip of the container (run outside of the container)
+#server: 172.19.0.3
+#client: 172.19.0.2
+
+docker inspect ContianerName/ID
+
+#

@@ -1,0 +1,63 @@
+#create a vm based on ubuntu
+
+docker run -it --name client ubuntu
+docker run -it --name server ubuntu
+
+#check ip, open a new terminal window and then run command
+
+docker inspect client
+
+#update all 
+
+apt update
+
+#install ping for both image
+
+apt install iputils-ping
+
+#for stop ping 
+
+control+c
+
+#for create a network (docker network create network_name) not in root state, run in other window
+
+docker network create net1
+
+#for connect image to a network (docker network connect network_name container_name) run this for both but not in "root"
+
+docker network connect net1 client
+
+#check which container connect on network (docker inspect network_name)
+
+docker inspect net1
+
+#as two container in a network now we can ping with name (ping container_name)
+
+ping client
+
+#to show all running and stop container 
+
+docker ps -a
+
+#to show all images 
+
+docker images
+
+#run and stop images
+
+docker run imageID
+docker stop imageID
+
+#run a previous container (docker start ContainerName/ID)
+
+docker start client
+
+#get into a container (docker attach ContainerName/ID)
+
+docker attach client
+
+#exit container 
+
+exit 
+
+#

@@ -1,0 +1,11 @@
+$TTL 86400
+@ IN SOA verysecureserver.com. admin.verysecureserver.com. (
+ 2007040301 ;serial
+ 14400 ;refresh
+ 3600 ;retry
+ 604800 ;expire
+ 10800 ;minimum
+)
+0.168.192.in-addr.arpa. IN NS verysecureserver.com.
+154 IN PTR verysecureserver.com.
+

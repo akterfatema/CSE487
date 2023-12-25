@@ -1,0 +1,72 @@
+Criticism of Terms of Service, and Privacy Policy of different food delivery services of Bangladesh.
+
+
+Food Panda
+ABOUT
+Food panda is an online food delivery platform owned by Berlin-based Delivery Hero. Food panda operates as the lead brand for food delivery in Bangladesh, with its headquarters in Singapore. It is currently the largest food and grocery delivery platform in Asia.
+
+Terms of service
+Foodpanda does not take any responsibility for late delivery however they said they will provide us only an estimated time though orders may arrive later. But sometimes they took too much additional time which is unfair to customers.
+
+Privacy Policy
+Food panda said they collect personal information form users using cookies, but they don't said what kind of data they collected and they don't inform how user can removed collected data from the database. They mentioned nothing about collected data protection. 
+
+
+PATHAO FOOD
+ABOUT
+Pathao bunches food delivery in Dhaka and Chittagong city in January 2018 and used bicycle deliveries to avoid the traffic. It directly competes with local and international delivery companies. A report by the Daily Star claimed that Pathao Food has 80% market share in the country.
+
+Terms of service
+Pathao food promised to give immediate solutions to the customers who faced problems receiving food. But sometimes they want 4 to 5 working days to solve these issues. Which is not fair for the customers. 
+
+Privacy Policy
+Pathao said the user must be an adult to register on their website and use their services. But they don't have any process to verify the proper age. They also collected information about browser type, browser language, internet protocol and browser history from user browser which is too much data and why need this type of data they didn't mentioned. 
+
+
+Pizza Hut
+ABOUT
+Pizza Hut is an American multinational restaurant chain and international franchise founded in 1958 in Wichita, Kansas by Dan and Frank Carney. They serve their signature pan pizza and other dishes including pasta, breadsticks and desserts.
+
+Terms of service
+Pizza Hut's Web servers automatically identify computers by their IP addresses which is not ethically correct.
+
+Privacy Policy
+Pizza Hut collect technical information about user's browser and operating system. They collect browser history and use that for showing adds about their product but not mentioned how can remove that data. 
+
+
+
+Domino's
+ABOUT
+Domino's came from humble beginnings in 1960, with just one store. Now, as the largest pizza company in the world. Domino's proudly continues its legacy or delivering great-tasting pizza to customer's doors.
+
+Terms of service
+Domino's collect user information about their location and mobile device location and can monitor where user go. These are unnecessary data that they store and they don't mention the
+process now to stop sharing this kind of information.
+
+Privacy Policy
+Each time user visit the Domino's site their server collects some anonymous information, the type of browser and system user are using, the address of the site user have come from and move to after the visit, the date and time of their visit, and then server's IP address also and they don't mention the process where they use these data.
+
+
+Hungry Naki
+ABOUT
+Hungry Naki is a name that mixes the words "Hungry" and "Naki"; and this translates to "Are You Hungry?". That is the basic yet profound philosophy that drives HungryNaki. Established in 2013, HungryNaki is Bangladesh's first online rood delivery service.
+
+Terms of service
+They said "Anything that you submit to the site and/or provide to us, including questions and answer, reviews comments, and suggestions will become our sole and exclusive property and shall not be returned to you". Which is not fair for the users. 
+
+Privacy Policy
+They mentioned what type of data they will collect and there is a option for seeing collected data but there is no way for removing collected data from website.
+
+
+
+Uber Eats
+ABOUT
+Uber Eats is an online food ordering and delivery platform launched by Uber in 2014. Meals are delivered by couriers using cars, scooters, bikes, or on foot. It is operational in over 6,000 cities across 45 countries as of 2021.
+
+Terms of service
+Uber said "Uber may restrict you from accessing or using the Uber Services, or any part of them, immediately, without notice", that means they didn't tell why they blocked a user.
+
+Privacy Policy
+Uber said "Some of Uber's services and features require that we share data with other users or at a user's request. We may also share such data with our affiliates, subsidiaries, and partners, for legal reasons or in connection with claims or disputes." But what types of data they will share they not mentioned that. 
+
+
